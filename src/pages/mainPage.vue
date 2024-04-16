@@ -21,6 +21,7 @@
       </h1>
       <button
         class="bg-black text-white rounded-xl px-5 py-3 flex mt-20 text-3xl items-center justify-center gap-5 hover:bg-gradient-to-r from-[#667eea] to-[#764ba2] transition-colors"
+        @click="$router.push({ name: 'Recipe' })"
       >
         <span>Comenzar a crear</span>
         <SparklesIcon class="w-8 h-8" />
