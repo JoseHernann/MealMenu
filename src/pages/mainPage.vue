@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import degradadoA from '@/assets/degradadoaA.vue';
+  import degradadoA from '@/assets/degradadoA.vue';
   import logoSaporiia from '@/assets/logoSaporiia.vue';
   import saporiIa from '@/assets/saporiIa.vue';
   import DegradadoB from '@/assets/degradadoB.vue';
