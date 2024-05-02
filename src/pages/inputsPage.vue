@@ -4,11 +4,12 @@
   import preguntas from '@/utils/options';
   import { ref } from 'vue';
   import iconSatar from '@/assets/iconSatar.vue';
-
+  import openAi from '../services/openAi.ts';
+  const response = ref('');
   const selected = ref();
   const promptBody = ref();
   const currentQuestion = ref(0);
-
+  const generateRecipe = ref(false);
   function getSelectedOption(index: number, opcion: string, pregNum: number) {
     selected.value = index;
     if (!promptBody.value) {
@@ -32,6 +33,21 @@
   }
   function prevQuestion() {
     currentQuestion.value = currentQuestion.value - 1;
+  }
+
+  async function genRecipe() {
+    generateRecipe.value = true;
+    const chat = await openAi.chat.completions.create({
+      messages: [
+        {
+          role: 'system',
+          content: `Crea una receta para una preferencia alimentaria : ${promptBody.value[0]} tambien que no contenga :  ${promptBody.value[1]} porque soy alergico, considera que mi actividad fisica es :  ${promptBody.value[2]} y dispongo de un tiempo para hacer da reseta de :  ${promptBody.value[3]} , dame la receta en markdown  `,
+        },
+      ],
+      model: 'gpt-3.5-turbo',
+    });
+    response.value = <string>chat.choices[0].message.content;
+    console.log(chat);
   }
 </script>
 
@@ -83,21 +99,22 @@
         <span class="py-3 hover:text-blue-500 ml-20" v-if="currentQuestion == 0">Cancelar</span>
         <button
           class="text-white bg-black px-10 rounded-md py-3 flex items-center gap-5"
-          v-if="currentQuestion != 4"
+          v-if="currentQuestion != 3"
           @click="nextQuestion"
         >
           Siguiente <ArrowLongRightIcon class="w-5 h-5" />
         </button>
         <button
           class="text-white bg-black px-10 rounded-md py-3 flex items-center gap-5"
-          v-if="currentQuestion == 4"
-          @click="nextQuestion"
+          v-if="currentQuestion == 3"
+          @click="genRecipe"
         >
-          Finalizar
+          Generar Receta <BoltIcon class="w-5 h-5" />
         </button>
       </div>
     </div>
   </div>
+  <div></div>
 </template>
 
 <style scoped>

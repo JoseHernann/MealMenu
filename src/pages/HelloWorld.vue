@@ -14,6 +14,6 @@
 <template>
   <div class="flex flex-col">
     <button class="bg-gray-400 p-5 rounded-xl m-20" @click="start">Generar receta</button>
-    <span>{{ response  aa}}</span>
+    <span>{{ response }}</span>
   </div>
 </template>
